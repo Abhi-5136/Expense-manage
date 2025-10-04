@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login/Signup Page -->
+    <div id="auth-page" class="page active">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                        <rect width="60" height="60" rx="12" fill="#4F46E5"/>
+                        <path d="M20 30h20M20 24h20M20 36h12" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="42" cy="36" r="6" fill="#10B981" stroke="white" stroke-width="2"/>
+                        <path d="M40 36l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>Expense Manager</h1>
+                <p class="subtitle">Streamline your expense approval process</p>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h2>Welcome Back</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <p class="toggle-auth">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form" style="display: none;">
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <label for="signup-company">Company Name</label>
+                        <input type="text" id="signup-company" placeholder="Enter company name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-currency">Company Currency</label>
+                        <select id="signup-currency" required>
+                            <option value="">Select currency</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-name">Admin Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <p class="toggle-auth">Already have an account? <a href="#" id="show-login">Sign in</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard-page" class="page">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+                    <rect width="60" height="60" rx="12" fill="#4F46E5"/>
+                    <path d="M20 30h20M20 24h20M20 36h12" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="42" cy="36" r="6" fill="#10B981" stroke="white" stroke-width="2"/>
+                    <path d="M40 36l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Expense Manager</span>
+            </div>
+            <div class="nav-user">
+                <span id="user-name">User</span>
+                <span id="user-role" class="badge">Employee</span>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item active" data-view="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" data-view="expenses">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span>My Expenses</span>
+                </li>
+                <li class="nav-item" data-view="submit" id="nav-submit">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    <span>Submit Expense</span>
+                </li>
+                <li class="nav-item" data-view="approvals" id="nav-approvals" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Approvals</span>
+                </li>
+                <li class="nav-item" data-view="users" id="nav-users" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Users</span>
+                </li>
+                <li class="nav-item" data-view="settings" id="nav-settings" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m8.66-15.66l-4.24 4.24m-4.24 4.24l-4.24 4.24M23 12h-6m-6 0H1m20.66 8.66l-4.24-4.24m-4.24-4.24l-4.24-4.24"></path>
+                    </svg>
+                    <span>Settings</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view active">
+                <div class="view-header">
+                    <h2>Dashboard</h2>
+                    <p>Overview of your expense management</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #EEF2FF;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Total Expenses</p>
+                            <h3 class="stat-value" id="stat-total">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #F0FDF4;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Approved</p>
+                            <h3 class="stat-value" id="stat-approved">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #FEF3C7;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Pending</p>
+                            <h3 class="stat-value" id="stat-pending">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #FEE2E2;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Rejected</p>
+                            <h3 class="stat-value" id="stat-rejected">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-expenses">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-list" class="expense-list"></div>
+                </div>
+            </div>
+
+            <!-- My Expenses View -->
+            <div id="expenses-view" class="view">
+                <div class="view-header">
+                    <h2>My Expenses</h2>
+                    <div class="filter-group">
+                        <select id="filter-status">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="expenses-list" class="expense-list"></div>
+            </div>
+
+            <!-- Submit Expense View -->
+            <div id="submit-view" class="view">
+                <div class="view-header">
+                    <h2>Submit New Expense</h2>
+                    <p>Fill in the details below to submit an expense claim</p>
+                </div>
+                <div class="form-container">
+                    <form id="expense-form" class="expense-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expense-amount">Amount</label>
+                                <input type="number" id="expense-amount" step="0.01" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-currency">Currency</label>
+                                <select id="expense-currency" required>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="INR">INR</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="CAD">CAD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expense-category">Category</label>
+                                <select id="expense-category" required>
+                                    <option value="">Select category</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Meals">Meals & Entertainment</option>
+                                    <option value="Office">Office Supplies</option>
+                                    <option value="Accommodation">Accommodation</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-date">Date</label>
+                                <input type="date" id="expense-date" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-description">Description</label>
+                            <textarea id="expense-description" rows="3" placeholder="Enter expense details..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-receipt">Receipt (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="expense-receipt" accept="image/*" style="display: none;">
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('expense-receipt').click()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    Upload Receipt
+                                </button>
+                                <span id="receipt-name" class="file-name"></span>
+                            </div>
+                            <button type="button" id="ocr-scan-btn" class="btn btn-secondary" style="margin-top: 10px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
+                                Scan Receipt (OCR)
+                            </button>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Submit Expense</button>
+                            <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Approvals View (Manager/Admin) -->
+            <div id="approvals-view" class="view">
+                <div class="view-header">
+                    <h2>Pending Approvals</h2>
+                    <div class="filter-group">
+                        <select id="approval-filter">
+                            <option value="all">All Expenses</option>
+                            <option value="pending">Pending Only</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="approvals-list" class="expense-list"></div>
+            </div>
+
+            <!-- Users Management View (Admin) -->
+            <div id="users-view" class="view">
+                <div class="view-header">
+                    <h2>User Management</h2>
+                    <button id="add-user-btn" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add User
+                    </button>
+                </div>
+                <div id="users-list" class="users-grid"></div>
+            </div>
+
+            <!-- Settings View (Admin) -->
+            <div id="settings-view" class="view">
+                <div class="view-header">
+                    <h2>Approval Settings</h2>
+                    <p>Configure approval workflows and rules</p>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h3>Approval Workflow</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enable-manager-approval">
+                                Enable Manager Approval
+                            </label>
+                            <p class="help-text">Expenses will be sent to employee's manager first</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="approval-sequence">Approval Sequence</label>
+                            <div id="approval-sequence-list"></div>
+                            <button id="add-approver-btn" class="btn btn-secondary">Add Approver Level</button>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Conditional Approval Rules</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="approval-rule" value="none" checked>
+                                No conditional rules
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="approval-rule" value="percentage">
+                                Percentage Rule
+                            </label>
+                            <div class="rule-config" id="percentage-config" style="display: none; margin-left: 25px;">
+                                <input type="number" id="percentage-value" min="1" max="100" placeholder="60">
+                                <span>% of approvers must approve</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="approval-rule" value="specific">
+                                Specific Approver Rule
+                            </label>
+                            <div class="rule-config" id="specific-config" style="display: none; margin-left: 25px;">
+                                <select id="specific-approver">
+                                    <option value="">Select approver</option>
+                                </select>
+                                <span>must approve for auto-approval</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="approval-rule" value="hybrid">
+                                Hybrid Rule
+                            </label>
+                            <div class="rule-config" id="hybrid-config" style="display: none; margin-left: 25px;">
+                                <input type="number" id="hybrid-percentage" min="1" max="100" placeholder="60">
+                                <span>% OR</span>
+                                <select id="hybrid-approver">
+                                    <option value="">Select approver</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="save-settings-btn" class="btn btn-primary">Save Settings</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for User Creation -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="user-name">Name</label>
+                    <input type="text" id="user-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-role">Role</label>
+                    <select id="user-role" required>
+                        <option value="employee">Employee</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                </div>
+                <div class="form-group" id="manager-select-group" style="display: none;">
+                    <label for="user-manager">Manager</label>
+                    <select id="user-manager">
+                        <option value="">Select manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                    <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Expense Details -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Expense Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="expense-details"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="demo-data.js"></script>
+</body>
+</html>
