@@ -1,3 +1,3 @@
 # Expense-manage
-Hackathon
+Odoo Hackathon
 <br>
