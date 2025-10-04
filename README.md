@@ -1,3 +1,3 @@
 # Expense-manage
-Odoo Hackathon
+Odoo Hackathon 2025
 <br>
